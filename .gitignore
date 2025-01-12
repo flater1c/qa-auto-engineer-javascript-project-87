@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+
+.idea
+.vscode
+
+.minio
+.turbo
+build
+dist
+node_modules
+.prettierrc
+
+data
