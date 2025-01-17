@@ -11,7 +11,7 @@ const parsedJsons = parseJSONFiles(getFixturePath('file1.json'), getFixturePath(
 const parsedYamls = parseYMLFiles(getFixturePath('file1.yml'), getFixturePath('file2.yml'));
 
 test('Checking flat jsons', () => {
-  expect(gendiff(parsedJsons.json1, parsedJsons.json2)).toEqual('{\n'
+  expect(gendiff(parsedJsons.output1, parsedJsons.output2)).toEqual('{\n'
         + ' - follow: false\n'
         + '   host: hexlet.io\n'
         + ' - proxy: 123.234.53.22\n'
@@ -21,7 +21,7 @@ test('Checking flat jsons', () => {
         + '}');
 });
 test('Checking flat yamls', () => {
-  expect(gendiff(parsedYamls.yml1, parsedYamls.yml2)).toEqual('{\n'
+  expect(gendiff(parsedYamls.output1, parsedYamls.output2)).toEqual('{\n'
       + ' - follow: false\n'
       + '   host: hexlet.io\n'
       + ' - proxy: 123.234.53.22\n'
