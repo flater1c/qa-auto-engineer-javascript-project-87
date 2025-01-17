@@ -3,11 +3,13 @@ import { Command } from 'commander';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import gendiff from '../src/gendiff.js';
-import parseJSONFiles from '../src/parse.js';
+import parseJSONFiles, { parseYMLFiles } from '../src/parse.js';
+import getExtension from '../src/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const program = new Command();
+let result;
 
 program
   .description('Compares two configuration files and shows a difference.')
@@ -18,9 +20,14 @@ program
   .action((file1, file2) => {
     const absFile1 = path.isAbsolute(file1) ? file1 : path.join(__dirname, file1);
     const absFile2 = path.isAbsolute(file2) ? file2 : path.join(__dirname, file2);
-    const result = parseJSONFiles(absFile1, absFile2);
+    if (getExtension(absFile1).includes('.json') && getExtension(absFile2).includes('.json')) {
+      result = parseJSONFiles(absFile1, absFile2);
+    }
+    if ((getExtension(absFile1).includes('.yml') && getExtension(absFile2).includes('.yml')) || (getExtension(absFile1).includes('.yaml') && getExtension(absFile2).includes('.yaml'))) {
+      result = parseYMLFiles(absFile1, absFile2);
+    }
     if (result) {
-      console.log(gendiff(result.json1, result.json2));
+      console.log(gendiff(result.output1, result.output2));
     }
   });
 program.parse();
