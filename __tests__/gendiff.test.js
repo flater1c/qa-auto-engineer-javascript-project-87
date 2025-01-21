@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
 import parseJSONFiles, { parseYMLFiles } from '../src/parse.js';
-import gendiff from '../src/gendiff.js';
+import diffOutput from '../formatters/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,7 +11,7 @@ const parsedJsons = parseJSONFiles(getFixturePath('file1.json'), getFixturePath(
 const parsedYamls = parseYMLFiles(getFixturePath('file1.yml'), getFixturePath('file2.yml'));
 
 test('Checking flat jsons', () => {
-  expect(gendiff(parsedJsons.output1, parsedJsons.output2)).toEqual('{\n'
+  expect(diffOutput(parsedJsons.output1, parsedJsons.output2, 'diff')).toEqual('{\n'
         + ' - follow: false\n'
         + '   host: hexlet.io\n'
         + ' - proxy: 123.234.53.22\n'
@@ -21,7 +21,7 @@ test('Checking flat jsons', () => {
         + '}');
 });
 test('Checking flat yamls', () => {
-  expect(gendiff(parsedYamls.output1, parsedYamls.output2)).toEqual('{\n'
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'diff')).toEqual('{\n'
       + ' - follow: false\n'
       + '   host: hexlet.io\n'
       + ' - proxy: 123.234.53.22\n'
@@ -29,4 +29,10 @@ test('Checking flat yamls', () => {
       + ' + timeout: 20\n'
       + ' + verbose: true\n'
       + '}');
+});
+test('Checking plain output', () => {
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'plain')).toEqual('Property follow was removed\n' +
+      'Property proxy was removed\n' +
+      'Property timeout  was updated. From 50 to 20\n' +
+      'Property verbose was added with value: true\n');
 });

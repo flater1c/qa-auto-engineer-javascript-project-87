@@ -2,7 +2,7 @@
 import { Command } from 'commander';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import gendiff from '../src/gendiff.js';
+import diffOutput from '../formatters/index.js';
 import parseJSONFiles, { parseYMLFiles } from '../src/parse.js';
 import getExtension from '../src/utils.js';
 
@@ -14,10 +14,10 @@ let result;
 program
   .description('Compares two configuration files and shows a difference.')
   .version('1.0.0')
-  .option('-f, --format <type>', 'output format')
+  .option('-f, --format <type>', 'output format', 'diff')
   .argument('<file1>', 'first file')
   .argument('<file2>', 'second file')
-  .action((file1, file2) => {
+  .action((file1, file2, options) => {
     const absFile1 = path.isAbsolute(file1) ? file1 : path.join(__dirname, file1);
     const absFile2 = path.isAbsolute(file2) ? file2 : path.join(__dirname, file2);
     if (getExtension(absFile1).includes('.json') && getExtension(absFile2).includes('.json')) {
@@ -27,7 +27,7 @@ program
       result = parseYMLFiles(absFile1, absFile2);
     }
     if (result) {
-      console.log(gendiff(result.output1, result.output2));
+      console.log(diffOutput(result.output1, result.output2, options.format));
     }
   });
 program.parse();
