@@ -5,7 +5,7 @@
   "main": "src/gendiff.js",
   "type": "module",
   "bin": {
-    "code": "bin/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "scripts": {
     "test": "jest --coverage"
