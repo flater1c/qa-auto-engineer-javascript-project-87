@@ -1,5 +1,6 @@
 import plain from './plain.js';
 import diff from './diff.js';
+import json from './json.js';
 
 export default (file1, file2, type) => {
   if (type === 'plain') {
@@ -8,5 +9,8 @@ export default (file1, file2, type) => {
   if (type === 'diff') {
     return diff(file1, file2);
   }
-  return null;
+  if (type === 'json') {
+    return json(file1, file2);
+  }
+  throw new Error('Allowed types are: plain, diff, json');
 };

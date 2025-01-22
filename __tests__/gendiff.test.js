@@ -36,3 +36,16 @@ test('Checking plain output', () => {
       + 'Property timeout  was updated. From 50 to 20\n'
       + 'Property verbose was added with value: true\n');
 });
+test('Checking json output', () => {
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'json')).toEqual({
+    changes: [
+      { key: 'follow', status: 'removed', oldValue: false },
+      { key: 'host', status: 'unchanged', value: 'hexlet.io' },
+      { key: 'proxy', status: 'removed', oldValue: '123.234.53.22' },
+      {
+        key: 'timeout', status: 'updated', oldValue: 50, newValue: 20,
+      },
+      { key: 'verbose', status: 'added', newValue: true },
+    ],
+  });
+});
