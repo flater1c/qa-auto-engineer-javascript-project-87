@@ -33,7 +33,7 @@ test('Checking flat yamls', () => {
 test('Checking plain output', () => {
   expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'plain')).toEqual('Property follow was removed\n'
       + 'Property proxy was removed\n'
-      + 'Property timeout  was updated. From 50 to 20\n'
+      + 'Property timeout was updated. From 50 to 20\n'
       + 'Property verbose was added with value: true\n');
 });
 test('Checking json output', () => {
