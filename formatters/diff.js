@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const diff = (file1, file2) => {
+export default (file1, file2) => {
   const result = ['{'];
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
@@ -24,5 +24,3 @@ const diff = (file1, file2) => {
   result.push('}');
   return result.join('\n');
 };
-
-export default diff;

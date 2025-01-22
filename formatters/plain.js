@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const plain = (file1, file2) => {
+export default (file1, file2) => {
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
   const uniqueKeys = _.union(keys1, keys2).sort();
@@ -19,5 +19,3 @@ const plain = (file1, file2) => {
     return acc;
   }, '');
 };
-
-export default plain;
