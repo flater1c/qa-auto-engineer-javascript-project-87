@@ -45,5 +45,5 @@ export default (file1, file2) => {
       }
     }
   });
-  return result;
+  return JSON.stringify(result, null, 2);
 };
