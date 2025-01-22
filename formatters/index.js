@@ -2,7 +2,7 @@ import plain from './plain.js';
 import stylish from './diff.js';
 import json from './json.js';
 
-export default (file1, file2, type = "stylish") => {
+export default (file1, file2, type = 'stylish') => {
   if (type === 'plain') {
     return plain(file1, file2);
   }
