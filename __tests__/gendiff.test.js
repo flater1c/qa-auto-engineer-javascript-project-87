@@ -12,22 +12,22 @@ const parsedYamls = parseYMLFiles(getFixturePath('file1.yml'), getFixturePath('f
 
 test('Checking flat jsons', () => {
   expect(diffOutput(parsedJsons.output1, parsedJsons.output2, 'diff')).toEqual('{\n'
-        + ' - follow: false\n'
-        + '   host: hexlet.io\n'
-        + ' - proxy: 123.234.53.22\n'
-        + ' - timeout: 50\n'
-        + ' + timeout: 20\n'
-        + ' + verbose: true\n'
+        + '  - follow: false\n'
+        + '    host: hexlet.io\n'
+        + '  - proxy: 123.234.53.22\n'
+        + '  - timeout: 50\n'
+        + '  + timeout: 20\n'
+        + '  + verbose: true\n'
         + '}');
 });
 test('Checking flat yamls', () => {
   expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'diff')).toEqual('{\n'
-      + ' - follow: false\n'
-      + '   host: hexlet.io\n'
-      + ' - proxy: 123.234.53.22\n'
-      + ' - timeout: 50\n'
-      + ' + timeout: 20\n'
-      + ' + verbose: true\n'
+      + '  - follow: false\n'
+      + '    host: hexlet.io\n'
+      + '  - proxy: 123.234.53.22\n'
+      + '  - timeout: 50\n'
+      + '  + timeout: 20\n'
+      + '  + verbose: true\n'
       + '}');
 });
 test('Checking plain output', () => {
