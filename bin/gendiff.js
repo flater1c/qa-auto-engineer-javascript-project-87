@@ -30,4 +30,4 @@ program
       console.log(diffOutput(result.output1, result.output2, options.format));
     }
   });
-program.parse();
+program.parse(process.argv);
