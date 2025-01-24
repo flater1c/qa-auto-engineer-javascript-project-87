@@ -14,14 +14,15 @@
   "license": "ISC",
   "dependencies": {
     "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
     "commander": "^13.0.0",
     "eslint-plugin-import": "^2.31.0",
     "js-yaml": "^4.1.0",
+    "globals": "^15.14.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@eslint/create-config": "^1.0.0",
-    "@eslint/js": "^9.18.0",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "eslint": "^8.57.1",
@@ -30,7 +31,6 @@
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "globals": "^15.14.0",
     "jest": "^29.7.0"
   }
 }

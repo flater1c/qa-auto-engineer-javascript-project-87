@@ -11,7 +11,7 @@ const parsedJsons = parseJSONFiles(getFixturePath('file1.json'), getFixturePath(
 const parsedYamls = parseYMLFiles(getFixturePath('file1.yml'), getFixturePath('file2.yml'));
 
 test('Checking flat jsons', () => {
-  expect(diffOutput(parsedJsons.output1, parsedJsons.output2, 'diff')).toEqual('{\n'
+  expect(diffOutput(parsedJsons.output1, parsedJsons.output2, 'stylish')).toEqual('{\n'
         + '  - follow: false\n'
         + '    host: hexlet.io\n'
         + '  - proxy: 123.234.53.22\n'
@@ -21,7 +21,7 @@ test('Checking flat jsons', () => {
         + '}');
 });
 test('Checking flat yamls', () => {
-  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'diff')).toEqual('{\n'
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'stylish')).toEqual('{\n'
       + '  - follow: false\n'
       + '    host: hexlet.io\n'
       + '  - proxy: 123.234.53.22\n'
@@ -31,21 +31,38 @@ test('Checking flat yamls', () => {
       + '}');
 });
 test('Checking plain output', () => {
-  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'plain')).toEqual('Property follow was removed\n'
-      + 'Property proxy was removed\n'
-      + 'Property timeout was updated. From 50 to 20\n'
-      + 'Property verbose was added with value: true\n');
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'plain')).toEqual('Property \'follow\' was removed\n'
+      + 'Property \'proxy\' was removed\n'
+      + 'Property \'timeout\' was updated. From 50 to 20\n'
+      + 'Property \'verbose\' was added with value: true');
 });
 test('Checking json output', () => {
-  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'json')).toEqual({
-    changes: [
-      { key: 'follow', status: 'removed', oldValue: false },
-      { key: 'host', status: 'unchanged', value: 'hexlet.io' },
-      { key: 'proxy', status: 'removed', oldValue: '123.234.53.22' },
-      {
-        key: 'timeout', status: 'updated', oldValue: 50, newValue: 20,
-      },
-      { key: 'verbose', status: 'added', newValue: true },
-    ],
-  });
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'json')).toEqual('[\n'
+      + '  {\n'
+      + '    "key": "follow",\n'
+      + '    "status": "removed",\n'
+      + '    "oldValue": false\n'
+      + '  },\n'
+      + '  {\n'
+      + '    "key": "host",\n'
+      + '    "status": "unchanged",\n'
+      + '    "value": "hexlet.io"\n'
+      + '  },\n'
+      + '  {\n'
+      + '    "key": "proxy",\n'
+      + '    "status": "removed",\n'
+      + '    "oldValue": "123.234.53.22"\n'
+      + '  },\n'
+      + '  {\n'
+      + '    "key": "timeout",\n'
+      + '    "status": "updated",\n'
+      + '    "oldValue": 50,\n'
+      + '    "newValue": 20\n'
+      + '  },\n'
+      + '  {\n'
+      + '    "key": "verbose",\n'
+      + '    "status": "added",\n'
+      + '    "newValue": true\n'
+      + '  }\n'
+      + ']');
 });
