@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs';
 import parseJSONFiles, { parseYMLFiles } from '../src/parse.js';
 import diffOutput from '../formatters/index.js';
 
@@ -9,60 +10,28 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 
 const parsedJsons = parseJSONFiles(getFixturePath('file1.json'), getFixturePath('file2.json'));
 const parsedYamls = parseYMLFiles(getFixturePath('file1.yml'), getFixturePath('file2.yml'));
+const plainOutput = fs.readFileSync(getFixturePath('plain_output.txt'), 'utf-8');
+const stylishOutput = fs.readFileSync(getFixturePath('stylish_output.txt'), 'utf-8');
+const JSONOutput = fs.readFileSync(getFixturePath('json_output.json'), 'utf-8');
 
 test('Checking flat jsons', () => {
-  expect(diffOutput(parsedJsons.output1, parsedJsons.output2, 'stylish')).toEqual('{\n'
-        + '  - follow: false\n'
-        + '    host: hexlet.io\n'
-        + '  - proxy: 123.234.53.22\n'
-        + '  - timeout: 50\n'
-        + '  + timeout: 20\n'
-        + '  + verbose: true\n'
-        + '}');
+  expect(diffOutput(parsedJsons.output1, parsedJsons.output2, 'stylish')).toBe(stylishOutput);
 });
 test('Checking flat yamls', () => {
-  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'stylish')).toEqual('{\n'
-      + '  - follow: false\n'
-      + '    host: hexlet.io\n'
-      + '  - proxy: 123.234.53.22\n'
-      + '  - timeout: 50\n'
-      + '  + timeout: 20\n'
-      + '  + verbose: true\n'
-      + '}');
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'stylish')).toBe(stylishOutput);
 });
 test('Checking plain output', () => {
-  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'plain')).toEqual('Property \'follow\' was removed\n'
-      + 'Property \'proxy\' was removed\n'
-      + 'Property \'timeout\' was updated. From 50 to 20\n'
-      + 'Property \'verbose\' was added with value: true');
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'plain')).toBe(plainOutput);
 });
 test('Checking json output', () => {
-  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'json')).toEqual('[\n'
-      + '  {\n'
-      + '    "key": "follow",\n'
-      + '    "status": "removed",\n'
-      + '    "oldValue": false\n'
-      + '  },\n'
-      + '  {\n'
-      + '    "key": "host",\n'
-      + '    "status": "unchanged",\n'
-      + '    "value": "hexlet.io"\n'
-      + '  },\n'
-      + '  {\n'
-      + '    "key": "proxy",\n'
-      + '    "status": "removed",\n'
-      + '    "oldValue": "123.234.53.22"\n'
-      + '  },\n'
-      + '  {\n'
-      + '    "key": "timeout",\n'
-      + '    "status": "updated",\n'
-      + '    "oldValue": 50,\n'
-      + '    "newValue": 20\n'
-      + '  },\n'
-      + '  {\n'
-      + '    "key": "verbose",\n'
-      + '    "status": "added",\n'
-      + '    "newValue": true\n'
-      + '  }\n'
-      + ']');
+  expect(diffOutput(parsedYamls.output1, parsedYamls.output2, 'json')).toBe(JSONOutput);
+});
+test('Checking wrong output format type', () => {
+  expect(() => {
+    diffOutput(parsedYamls.output1, parsedYamls.output2, 'anytype');
+  }).toThrow(Error);
+});
+test('Checking invalid files parsing', () => {
+  expect(parseJSONFiles(parsedJsons.output1 + '1', parsedJsons.output2 + '1')).toBeNull();
+  expect(parseYMLFiles(parsedYamls.output1 + '1', parsedYamls.output2 + '1')).toBeNull();
 });
