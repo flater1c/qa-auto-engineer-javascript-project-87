@@ -11,6 +11,6 @@ export default (file, fileFormat) => {
     }
   } catch (error) {
     console.error('Ошибка при обработке файлов:', error);
-    return null;
   }
+  return null;
 };

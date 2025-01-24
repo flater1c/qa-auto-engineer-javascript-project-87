@@ -34,6 +34,6 @@ test('Checking wrong output format type', () => {
   }).toThrow(Error);
 });
 test('Checking invalid files parsing', () => {
-  expect(parseFile(parsedJson1 + '1', 'json')).toBeNull();
-  expect(parseFile(parsedYaml1 + '1', 'yaml')).toBeNull();
+  expect(parseFile(`${parsedJson1}1`, 'json')).toBeNull();
+  expect(parseFile(`${parsedYaml1}1`, 'yaml')).toBeNull();
 });
