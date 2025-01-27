@@ -12,5 +12,5 @@ export default (file1, file2, type = 'stylish') => {
   if (type === 'json') {
     return json(file1, file2);
   }
-  throw new Error('Allowed format types are: plain, diff, json');
+  throw new Error('Allowed format types are: plain, stylish, json');
 };
