@@ -44,3 +44,8 @@ test('Checking different file formats', () => {
     gendiff(getFixturePath('file1.json'), getFixturePath('file2.yml'), '.json');
   }).toThrow(Error);
 });
+test('Checking invalid file format', () => {
+  expect(() => {
+    parseFile(getFixturePath('file1.json'), '.txt');
+  }).toThrow();
+});
