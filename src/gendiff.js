@@ -1,30 +1,18 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
-import getExtension from './utils.js';
 import parseFile from './parse.js';
-import diffOutput from '../formatters/index.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import diffOutput from './formatters/index.js';
 
 const genDiff = (file1, file2, format) => {
-  const absFile1 = path.isAbsolute(file1) ? file1 : path.join(__dirname, file1);
-  const absFile2 = path.isAbsolute(file2) ? file2 : path.join(__dirname, file2);
-  if (getExtension(absFile1).includes('.json') && getExtension(absFile2).includes('.json')) {
+  const absFile1 = path.resolve(file1);
+  const absFile2 = path.resolve(file2);
+  if (path.extname(absFile1) === path.extname(absFile2)) {
     return diffOutput(
-      parseFile(absFile1, 'json'),
-      parseFile(absFile2, 'json'),
+      parseFile(absFile1, path.extname(absFile1)),
+      parseFile(absFile2, path.extname(absFile1)),
       format,
     );
   }
-  if ((getExtension(absFile1).includes('.yml') && getExtension(absFile2).includes('.yml')) || (getExtension(absFile1).includes('.yaml') && getExtension(absFile2).includes('.yaml'))) {
-    return diffOutput(
-      parseFile(absFile1, 'yaml'),
-      parseFile(absFile2, 'yaml'),
-      format,
-    );
-  }
-  return null;
+  throw new Error('Both files should have the same format, either yaml or json');
 };
 
 export default genDiff;
