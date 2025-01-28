@@ -11,7 +11,7 @@ npm link
 ```
 After that you can run the util, for example:
 ```shell
-gendiff ../__fixtures__/file1.yml ../__fixtures__/file2.yml 
+gendiff ./__fixtures__/file1.yml ./__fixtures__/file2.yml 
 ```
 ## Asciinema Demo
 [![asciicast](https://asciinema.org/a/5TbDPNB5HzPPMLLMYfPpZmUmT.svg)](https://asciinema.org/a/5TbDPNB5HzPPMLLMYfPpZmUmT)
