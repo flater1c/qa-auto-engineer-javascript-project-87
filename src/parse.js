@@ -1,17 +1,22 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 
+const parseData = (data, fileFormat) => {
+  if (fileFormat === '.json') {
+    return JSON.parse(data);
+  }
+  if (fileFormat === '.yaml' || fileFormat === '.yml') {
+    return yaml.load(data);
+  }
+  throw new Error(`Unsupported file format: ${fileFormat}`);
+};
+
 export default (file, fileFormat) => {
   try {
-    if (fileFormat === '.json') {
-      return JSON.parse(fs.readFileSync(file, 'utf8'));
-    }
-    if (fileFormat === '.yaml' || fileFormat === '.yml') {
-      return yaml.load(fs.readFileSync(file, 'utf8'));
-    }
-    throw new Error(`Неподдерживаемый формат файла: ${fileFormat}`);
+    const fileData = fs.readFileSync(file, 'utf8'); // Чтение файла
+    return parseData(fileData, fileFormat); // Парсинг данных
   } catch (error) {
-    console.error('Ошибка при обработке файлов:', error);
+    console.error('Error while processing file(s):', error);
     throw error;
   }
 };
