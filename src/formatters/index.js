@@ -42,6 +42,7 @@ export default (file1, file2, outputType) => {
     }
 
     if (file1[key] === file2[key]) {
+      console.log('output type is' + outputType);
       switch (outputType) {
         case 'stylish':
           return `    ${key}: ${file1[key]}\n`;
