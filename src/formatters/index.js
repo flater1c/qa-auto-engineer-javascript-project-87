@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default (file1, file2, outputType) => {
+export default (file1, file2, outputType = 'stylish') => {
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
   const uniqueKeys = _.union(keys1, keys2);
@@ -42,7 +42,6 @@ export default (file1, file2, outputType) => {
     }
 
     if (file1[key] === file2[key]) {
-      console.log('output type is' + outputType);
       switch (outputType) {
         case 'stylish':
           return `    ${key}: ${file1[key]}\n`;
