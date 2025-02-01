@@ -3,7 +3,7 @@ import parseFile from './fileProcessing.js';
 import diffOutput from './formatters/index.js';
 import buildDiffTree from './buildDiffTree.js';
 
-const genDiff = (file1, file2, format) => {
+const genDiff = (file1, file2, format = 'stylish') => {
   const absFile1 = path.resolve(file1);
   const absFile2 = path.resolve(file2);
   if (path.extname(absFile1) === path.extname(absFile2)) {
