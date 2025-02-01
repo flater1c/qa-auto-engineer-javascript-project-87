@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
 const buildDiffTree = (file1, file2) => {
-  const keys = _.union(Object.keys(file1), Object.keys(file2)).sort();
+  const uniqueKeys = _.union(Object.keys(file1), Object.keys(file2));
+  const sortedUniqueKeys = _.orderBy(uniqueKeys, [], ['asc']);
 
-  return keys.map((key) => {
+  return sortedUniqueKeys.map((key) => {
     if (!Object.hasOwn(file1, key)) {
       return { key, status: 'added', newValue: file2[key] };
     }
